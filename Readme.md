@@ -1,7 +1,7 @@
 ### setup the project
 
 -Download this template from github and open it in your fav code editor.
--Go inside folder path and execute the following command.
+-Go inside folder path and execute the following command:
 ```
 npm install
 ```
