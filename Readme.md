@@ -1,34 +1,64 @@
-### setup the project
+📥 1. Clone & Open Project
+Download this template from GitHub or clone it using:
 
--Download this template from github and open it in your fav code editor.
--Go inside folder path and execute the following command:
-```
+bash
+Copy
+Edit
+git clone https://github.com/varshitkhulbe/Backend-project.git
+cd Backend-Project
+Open the project in your favorite code editor (e.g., VS Code).
+
+📦 2. Install Dependencies
+Run the following command in the root directory:
+
+bash
+Copy
+Edit
 npm install
-```
--In the root directory create a `.env` file and add the following env variables.
+⚙️ 3. Create .env File
+In the root directory, create a file named .env and add:
 
-```
-  PORT=<port number of your choice>
-```
+env
+Copy
+Edit
+PORT=3000
+📝 Replace 3000 with the port number of your choice.
 
-ex-
+🔧 4. Initialize Sequelize
+Navigate to the src folder and run:
 
-```
-PORT:3000
-```
+bash
+Copy
+Edit
+npx sequelize init
+This will generate:
 
--Go inside the `src` folder and run following command.
-```
-npx sequilise init
-```
--By executing the above the above command you will get `migrations and seeders` folder along with `config.json` in the config folder.
+migrations/ folder
 
-🔑 Notes:
-If you’re using a different database, update the "dialect" (e.g. "mariadb", "postgres", etc.).
+seeders/ folder
+
+config/config.json file
+
+🛠️ 5. Update config.json
+Inside src/config/config.json, update your DB settings like so:
+
+json
+Copy
+Edit
+{
+  "development": {
+    "username": "your_db_username",
+    "password": "your_db_password",
+    "database": "your_db_name",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  ...
+}
+🔑 Notes
+If you're using a different database, change "dialect" to "mariadb", "postgres", etc.
 
 Replace "username" and "password" with your actual DB credentials.
 
-For test or production, also update the "host" to match your hosted DB URL.
-
-
+For test or production, update the "host" to your hosted DB URL.
 
