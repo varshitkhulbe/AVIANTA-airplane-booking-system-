@@ -1,7 +1,7 @@
 ### setup the project
 
--Download this template from github and open it in your fav code editor
--In the root directory create a `.env` file and add the following env variables
+-Download this template from github and open it in your fav code editor.
+-In the root directory create a `.env` file and add the following env variables.
 
 ```
   PORT=<port number of your choice>
@@ -41,6 +41,9 @@ PORT:3000
 }
 
 ```
+🔑 Notes:
+If you’re using a different database, update the "dialect" (e.g. "mariadb", "postgres", etc.).
 
--If you are setting up development environment,then write the username of your db ,password of your db and in dialect mention whatever db you are using for eg-mariadb,mysql etc.
--if you setting up production or test enviornment,make sure you also replace the host with the hosted db url
+Replace "username" and "password" with your actual DB credentials.
+
+For test or production, also update the "host" to match your hosted DB URL.
