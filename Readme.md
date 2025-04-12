@@ -46,13 +46,13 @@ json<br>
 Copy<br>
 Edit<br>
 {
-  "development": {
-    "username": "your_db_username",
-    "password": "your_db_password",
-    "database": "your_db_name",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
-  },
+  "development": {<br>
+    "username": "your_db_username",<br>
+    "password": "your_db_password",<br>
+    "database": "your_db_name",<br>
+    "host": "127.0.0.1",<br>
+    "dialect": "mysql"<br>
+  },<br>
   ...
 }
 🔑 Notes<br>
