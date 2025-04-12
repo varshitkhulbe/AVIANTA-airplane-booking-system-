@@ -4,7 +4,7 @@ Download this template from GitHub or clone it using:<br>
 bash<br>
 Copy<br>
 Edit<br>
-git clone https://github.com/varshitkhulbe/Backend-project.git<br>
+git clone https://github.com/varshitkhulbe/Basic-node-express-template.git<br>
 cd Backend-Project<br>
 Open the project in your favorite code editor (e.g., VS Code).<br>
 
@@ -54,7 +54,7 @@ Edit<br>
     "dialect": "mysql"<br>
   },<br>
   ...
-}
+}<br>
 🔑 Notes<br>
 If you're using a different database, change "dialect" to "mariadb", "postgres", etc.<br>
 
