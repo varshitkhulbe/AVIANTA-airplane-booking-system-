@@ -54,8 +54,24 @@ async function getAirplane(id) {
   }
 }
 
+async function destroyAirplane(id){
+  try {
+    const response= await airplanerepository.delete(id);
+    return response;
+  } catch (error) {
+    if (error.StatusCode === StatusCodes.NOT_FOUND) {
+      throw new appError(
+        "The airplane you requested to delete is not found",
+        StatusCodes.NOT_FOUND
+      );
+    }
+    throw new appError("Cannot delete the airplane",StatusCodes.INTERNAL_SERVER_ERROR)
+  }
+}
+
 module.exports = {
   createAirplane,
   getAirplanes,
   getAirplane,
+  destroyAirplane
 };
