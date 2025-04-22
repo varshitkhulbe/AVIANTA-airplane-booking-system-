@@ -8,5 +8,7 @@ const router = express.Router();
 router.post("/",
     airplaneMiddleware.validateCreateAirplane,
     airplaneController.createAirplane);
+router.get("/",
+    airplaneController.getAirplanes);
 
 module.exports = router;
