@@ -1,6 +1,6 @@
 const { StatusCodes } = require("http-status-codes");
-const {AirplaneRepository} = require("../repositories");
-const appError=require("../utils/error/app-error")
+const { AirplaneRepository } = require("../repositories");
+const appError = require("../utils/error/app-error");
 const airplanerepository = new AirplaneRepository();
 
 async function createAirplane(data) {
@@ -9,28 +9,53 @@ async function createAirplane(data) {
     return airplane;
   } catch (error) {
     console.log("Error in creating airplane", error.errors);
-    if(error.name==="SequelizeValidationError"){
-      let explanation=[];
-      error.errors.forEach((err)=>{
-        explanation.push(err.message); 
-      })
-      console.log("EXPLANATION IS:",explanation);
-      throw new appError(explanation,StatusCodes.BAD_REQUEST)
+    if (error.name === "SequelizeValidationError") {
+      let explanation = [];
+      error.errors.forEach((err) => {
+        explanation.push(err.message);
+      });
+      console.log("EXPLANATION IS:", explanation);
+      throw new appError(explanation, StatusCodes.BAD_REQUEST);
     }
-    throw new appError("Cannot create a new airplane object",StatusCodes.INTERNAL_SERVER_ERROR);
+    throw new appError(
+      "Cannot create a new airplane object",
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
   }
 }
 
-async function getAirplanes(data){
-  try{
-    const airplanes=await airplanerepository.getAll(data);
+async function getAirplanes(data) {
+  try {
+    const airplanes = await airplanerepository.getAll(data);
     return airplanes;
-  }catch (error) {
-    throw new appError("Cannot fetch the data of all airplanes",StatusCodes.INTERNAL_SERVER_ERROR);
+  } catch (error) {
+    throw new appError(
+      "Cannot fetch the data of all airplanes",
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
   }
 }
- 
-module.exports={
-    createAirplane,
-    getAirplanes
+
+async function getAirplane(id) {
+  try {
+    const airplane = await airplanerepository.get(id);
+    return airplane;
+  } catch (error) {
+    if (error.StatusCode === StatusCodes.NOT_FOUND) {
+      throw new appError(
+        "The searched airplane is not found",
+        StatusCodes.NOT_FOUND
+      );
+    }
+    throw new appError(
+      "there is a problem fetching airplane",
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
 }
+
+module.exports = {
+  createAirplane,
+  getAirplanes,
+  getAirplane,
+};

@@ -1,5 +1,7 @@
 const { where } = require("sequelize");
 const { Logger } = require("../config");
+const appError = require("../utils/error/app-error");
+const { StatusCodes } = require("http-status-codes");
 class CrudRepository {
   constructor(model) {
     this.model = model;
@@ -19,6 +21,9 @@ class CrudRepository {
   }
   async get(data) {
     const response = await this.model.findByPk(data);
+    if (!response){
+      throw new appError("The searched object is not found",StatusCodes.NOT_FOUND);
+    }
     return response;
   }
   async getAll(data) {
