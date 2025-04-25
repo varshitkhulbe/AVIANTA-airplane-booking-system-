@@ -2,8 +2,6 @@ const { AirplaneService } = require("../services");
 console.log(AirplaneService);
 const { StatusCodes } = require("http-status-codes");
 const { errorResponse, successResponse } = require("../utils/common");
-const e = require("express");
-const { success } = require("../utils/common/error-response");
 // POST: /
 // req.body={}
 async function createAirplane(req, res) {
