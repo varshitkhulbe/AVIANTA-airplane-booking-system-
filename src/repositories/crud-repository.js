@@ -17,15 +17,21 @@ class CrudRepository {
         id: data,
       },
     });
-    if(!response){
-      throw new appError("The searched airplane is not found",StatusCodes.NOT_FOUND);
+    if (!response) {
+      throw new appError(
+        "The searched airplane is not found",
+        StatusCodes.NOT_FOUND
+      );
     }
     return response;
   }
   async get(data) {
     const response = await this.model.findByPk(data);
-    if (!response){
-      throw new appError("The searched object is not found",StatusCodes.NOT_FOUND);
+    if (!response) {
+      throw new appError(
+        "The searched object is not found",
+        StatusCodes.NOT_FOUND
+      );
     }
     return response;
   }
@@ -34,12 +40,20 @@ class CrudRepository {
     return response;
   }
   async update(id, data) {
-    const response = await this.model.update(data, {
+    const [rowsUpdated] = await this.model.update(data, {
       where: {
         id: id,
       },
     });
-    return response;
+    if (rowsUpdated === 0) {
+      throw new appError(
+        "The searched object is not found",
+        StatusCodes.NOT_FOUND
+      );
+    }
+    const updated = await this.model.findByPk(id);
+    console.log("updated record =", updated);
+    return updated;
   }
 }
 
