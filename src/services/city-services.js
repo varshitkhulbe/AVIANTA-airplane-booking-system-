@@ -22,6 +22,20 @@ async function createCity(data){
    }
 }
 
+async function deleteCity(id){
+    try{
+        const response= await cityrepository.delete(id)
+        return response;
+    }catch(error){
+        console.log("error in deleting city",error)
+        if(error.StatusCode===StatusCodes.NOT_FOUND){
+            throw new appError("City not found",StatusCodes.NOT_FOUND)
+        }
+        throw new appError("Something went wrong",StatusCodes.INTERNAL_SERVER_ERROR)
+    }
+}
+
 module.exports={
-    createCity
+    createCity,
+    deleteCity
 }

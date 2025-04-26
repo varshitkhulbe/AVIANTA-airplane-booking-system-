@@ -6,7 +6,7 @@ const appError = require("../utils/error/app-error")
         if(!req.body.name ||  req.body.name.trim() === ""){
             errorResponse.message="something went wrong while creating city"
             errorResponse.error=new appError(" city name is not found in the incoming request or the format is incorrect",StatusCodes.BAD_REQUEST)
-            return res.json(errorResponse);
+            return res.status(StatusCodes.BAD_REQUEST).json(errorResponse);
 }
                   next();
 }
