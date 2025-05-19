@@ -1,12 +1,13 @@
-const express = require ('express')
-const router = express.Router()
-const {infoController} = require('../../controller')
-const airplaneRoutes =require("./airplane-router")
-const cityRoutes = require("./city-router")
-const airportRoutes = require("./airport-router")
-
-router.use("/airplanes",airplaneRoutes)
-router.use("/cities",cityRoutes)
-router.use("/airports",airportRoutes)
-router.get('/info',infoController.info);
-module.exports=router
+const express = require("express");
+const router = express.Router();
+const { infoController } = require("../../controller");
+const airplaneRoutes = require("./airplane-router");
+const cityRoutes = require("./city-router");
+const airportRoutes = require("./airport-router");
+const flightRoutes = require("./flight-routes");
+router.use("/airplanes", airplaneRoutes);
+router.use("/cities", cityRoutes);
+router.use("/airports", airportRoutes);
+router.use("/flights", flightRoutes);
+router.get("/info", infoController.info);
+module.exports = router;
