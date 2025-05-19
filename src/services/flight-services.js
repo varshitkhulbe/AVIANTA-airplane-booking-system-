@@ -34,32 +34,33 @@ async function createFlight(data) {
 }
 
 async function getAllFlights(query){
+  try{
     console.log(query);
   let customFilter={};
 // trips=MUM-DEL
   if(query.trips){
     [departureAirportId,arrivalAirportId]=query.trips.split("-");
-    // if(departureAirportId == arrivalAirportId){
-    //   throw new appError(
-    //     "Departure and Arrival airport cannot be same",
-    //     StatusCodes.BAD_REQUEST
-    //   );
-    //  }
+    if(departureAirportId == arrivalAirportId){
+      throw new appError(
+        "Departure and Arrival airport cannot be same",
+        StatusCodes.BAD_REQUEST
+      );
+     }
     customFilter.departureAirportId=departureAirportId;
     customFilter.arrivalAirportId=arrivalAirportId;
     console.log(customFilter);
-    try{
+  
     const flights=await flightrepository.getAllFlights(customFilter);
     return flights;
-  }catch(error){
-    //  if (error instanceof appError){
-    //   throw error;
-    //  }
+    }}catch(error){
+     if (error instanceof appError){
+      throw error;
+     }
       throw new appError(
         "Cannot fetch the data of all flights",
         StatusCodes.INTERNAL_SERVER_ERROR)
   }
-}}
+}
 module.exports = {
   createFlight,
   getAllFlights
