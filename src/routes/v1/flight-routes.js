@@ -14,4 +14,11 @@ router.get(
   "/",flightController.getAllFlights
 );
 
+router.get(
+  "/:id",
+  flightController.getFlight
+);
+
+
 module.exports = router;
+

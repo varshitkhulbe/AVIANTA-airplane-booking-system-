@@ -38,7 +38,7 @@ async function getAllFlights(query) {
   try {
     console.log(query);
     let customFilter = {};
-    let sortFilter=[];
+    let sortFilter = [];
     const endingTripTime = " 23:59:00";
     // trips=MUM-DEL
     if (query.trips) {
@@ -73,13 +73,16 @@ async function getAllFlights(query) {
       };
     }
 
-    if(query.sortBy){
-      const params= query.sortBy.split(",");
-      const SortFilters=params.map((param)=>param.split("_"));
-      sortFilter=SortFilters;
+    if (query.sortBy) {
+      const params = query.sortBy.split(",");
+      const SortFilters = params.map((param) => param.split("_"));
+      sortFilter = SortFilters;
     }
-    
-    const flights = await flightrepository.getAllFlights(customFilter,sortFilter);
+
+    const flights = await flightrepository.getAllFlights(
+      customFilter,
+      sortFilter
+    );
     return flights;
   } catch (error) {
     if (error instanceof appError) {
@@ -91,7 +94,26 @@ async function getAllFlights(query) {
     );
   }
 }
+
+async function getFlight(id) {
+  try {
+    const flight = await flightrepository.get(id);
+    return flight;
+  } catch (error) {
+    if (error.statusCode === StatusCodes.NOT_FOUND) {
+      throw new appError(
+        "the searched flight is not found",
+        StatusCodes.NOT_FOUND
+      );
+    }
+    throw new appError(
+      "there is a problem in fetching flight",
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+}
 module.exports = {
   createFlight,
   getAllFlights,
+  getFlight,
 };
