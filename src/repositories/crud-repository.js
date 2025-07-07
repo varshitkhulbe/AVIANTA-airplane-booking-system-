@@ -53,7 +53,6 @@ class CrudRepository {
     }
     const updated = await this.model.findByPk(id);
     console.log("updated record =", updated);
-    return updated;
   }
 }
 

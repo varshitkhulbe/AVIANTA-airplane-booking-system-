@@ -1,4 +1,4 @@
-const { FlightServices} = require("../services");
+const { FlightServices } = require("../services");
 console.log(FlightServices);
 const { StatusCodes } = require("http-status-codes");
 const { errorResponse, successResponse } = require("../utils/common");
@@ -28,20 +28,55 @@ async function createFlight(req, res) {
   }
 }
 
-async function getAllFlights(req,res){
-  try{
-    const flights=await FlightServices.getAllFlights(req.query);
-    successResponse.data=flights;
+async function getAllFlights(req, res) {
+  try {
+    const flights = await FlightServices.getAllFlights(req.query);
+    successResponse.data = flights;
     return res.status(StatusCodes.OK).json(successResponse);
-  }
-  catch(error){
+  } catch (error) {
     console.log(error);
-    errorResponse.message="something went wrong while fetching all flights";
-    errorResponse.error=error;
+    errorResponse.message = "something went wrong while fetching all flights";
+    errorResponse.error = error;
     return res.status(error.StatusCode).json(errorResponse);
+  }
+}
+
+async function getFlight(req, res) {
+  try {
+    const flight = await FlightServices.getFlight(req.params.id);
+    successResponse.data = flight;
+    return res.status(StatusCodes.OK).json(successResponse);
+  } catch (error) {
+    console.log(error);
+    errorResponse.message = "something went wrong while fetching flight";
+    errorResponse.error = error;
+    return res
+      .status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR)
+      .json(errorResponse);
+  }
+}
+
+async function updateSeats(req, res) {
+  try {
+    const response = await FlightServices.updateSeats({
+      flightId: req.params.flightId,
+      seats: req.body.seats,
+      dec: req.body.dec,
+    });
+    successResponse.data = response;
+    return res.status(StatusCodes.OK).json(successResponse);
+  } catch (error) {
+    console.log(error);
+    errorResponse.message = "something went wrong while updating seats";
+    errorResponse.error = error;
+    return res
+      .status(error.StatusCode || StatusCodes.INTERNAL_SERVER_ERROR)
+      .json(errorResponse);
   }
 }
 module.exports = {
   createFlight,
-  getAllFlights
+  getAllFlights,
+  getFlight,
+  updateSeats
 };

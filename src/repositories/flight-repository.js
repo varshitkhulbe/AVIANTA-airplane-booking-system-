@@ -1,6 +1,11 @@
 const { Sequelize } = require("sequelize");
+const db= require("../models");
+const {addRowLockOnFlights}=require("./query")
 const CrudRepository = require("./crud-repository");
 const { Airplane, Airport, Flight, City } = require("../models");
+const appError = require("../utils/error/app-error");
+const {StatusCodes} = require("http-status-codes");
+const { add } = require("winston");
 class FlightRepository extends CrudRepository {
   constructor() {
     super(Flight);
@@ -48,6 +53,29 @@ class FlightRepository extends CrudRepository {
       console.error("Error in Flight.findAll:", error);
       throw error;
     }
+  }
+
+  async updateRemainingSeats(flightId,seats,dec=true)
+  {
+    db.sequelize.query(addRowLockOnFlights(flightId));
+    const  flight = await Flight.findByPk(flightId);
+     
+    if (!flight) {
+    throw new appError(
+      `Flight with id ${flightId} not found`,
+      StatusCodes.NOT_FOUND
+    );
+  }
+    if(parseInt(dec))
+    {
+      await flight.decrement("totalSeats",{by:seats});
+    }
+    else
+    {
+      await flight.increment("totalSeats",{by:seats});
+    }
+    await flight.save();
+    return flight;
   }
 }
 module.exports = FlightRepository;

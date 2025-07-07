@@ -68,4 +68,26 @@ function validateCreateFlight(req, res, next) {
   }
   next();
 }
-module.exports = { validateCreateFlight };
+
+function validateUpdateSeatsRequest(req,res,next){
+  if(!req.body.seats)
+  {
+    errorResponse.message="something went wrong while updating seats";
+    errorResponse.error=new appError(
+      "seats is not found in the incoming request or the format is incorrect",
+      StatusCodes.BAD_REQUEST
+    );
+    return res.json(errorResponse);
+  }
+  // if(!req.body.dec)
+  // {
+  //   errorResponse.message="something went wrong while updating seats";
+  //   errorResponse.error=new appError(
+  //     "dec is not found in the incoming request or the format is incorrect",
+  //     StatusCodes.BAD_REQUEST
+  //   );
+  //   return res.json(errorResponse);
+  // }
+  next();
+}
+module.exports = { validateCreateFlight ,validateUpdateSeatsRequest}
