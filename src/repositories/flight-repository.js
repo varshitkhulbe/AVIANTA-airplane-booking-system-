@@ -66,7 +66,7 @@ class FlightRepository extends CrudRepository {
       StatusCodes.NOT_FOUND
     );
   }
-    if(parseInt(dec))
+    if(+dec)
     {
       await flight.decrement("totalSeats",{by:seats});
     }
